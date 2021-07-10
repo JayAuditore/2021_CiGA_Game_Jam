@@ -27,15 +27,6 @@ namespace CGJ.UI.PauseMenuController
         }
 
         /// <summary>
-        /// 暂停菜单点返回
-        /// </summary>
-        public void OnBackClick()
-        {
-            Param.pauseCondition = -Param.pauseCondition;
-            transform.gameObject.SetActive(false);
-        }
-
-        /// <summary>
         /// 音量条
         /// </summary>
         /// <param name="volume">音量大小</param>

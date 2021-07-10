@@ -17,8 +17,6 @@ namespace CGJ.UI.MainMenu
 
         #endregion 
 
-
-
         #region 方法
 
         /// <summary>
@@ -63,8 +61,6 @@ namespace CGJ.UI.MainMenu
         }
 
         #endregion 
-
-
     }
 
 }

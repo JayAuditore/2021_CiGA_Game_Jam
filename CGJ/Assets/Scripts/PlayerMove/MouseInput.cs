@@ -19,10 +19,9 @@ namespace CGJ.PlayerController
 
         private void Update()
         {
-            GetMouseCondition();
-            GetMousePosition();
             SetTimeScale();
             OpenPauseMenu();
+            GetMousePosition();
         }
 
         #endregion
@@ -59,19 +58,16 @@ namespace CGJ.PlayerController
         }
 
         /// <summary>
-        /// 获取鼠标是否按下的状态
-        /// </summary>
-        public void GetMouseCondition()
-        {
-            mouseCondition = Input.GetMouseButtonDown(0);
-        }
-
-        /// <summary>
         /// 获取鼠标位置
         /// </summary>
         public void GetMousePosition()
         {
-            MousePosition = Input.mousePosition;
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 _temp = Input.mousePosition;
+                MousePosition = Camera.main.ScreenToWorldPoint(_temp);
+                mouseCondition = true;
+            }
         }
 
         #endregion
