@@ -67,6 +67,14 @@ namespace CGJ.PlayerController
                 Vector3 _temp = Input.mousePosition;
                 MousePosition = Camera.main.ScreenToWorldPoint(_temp);
                 mouseCondition = true;
+                if (MousePosition.x < 0)
+                {
+                    transform.localScale = new Vector3(-1f, 1f, 1f);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1f, 1f, 1f);
+                }
             }
         }
 

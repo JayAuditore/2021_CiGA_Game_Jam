@@ -18,6 +18,7 @@ namespace CGJ.PlayerController
         private Vector3 realPlayerPivot;
         private RaycastHit2D info;
         private Vector3 playerScreenPosistion;
+        private Vector2 targetSpeed;
 
         public LayerMask mask;
 
@@ -27,8 +28,10 @@ namespace CGJ.PlayerController
 
         private void Update()
         {
-            realPlayerPivot = new Vector3(transform.position.x - 2f, transform.position.y + 1.5f, transform.position.z);
+            realPlayerPivot = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
             playerScreenPosistion = Camera.main.WorldToScreenPoint(realPlayerPivot);
+
+            OnPlayerInvisible();
 
             if (mouseInput.mouseCondition)
             {
@@ -67,9 +70,17 @@ namespace CGJ.PlayerController
         public void ResetRope()
         {
             anim.SetBool("IsThrowing", false);
+            if (info.transform == null)
+            {
+                targetSpeed = Vector2.zero;
+            }
+            else
+            {
+                info.transform.GetComponent<Rigidbody2D>().velocity = targetSpeed;
+            }
             targetPosistion = realPlayerPivot;
             component.SetPosition(1, realPlayerPivot);
-            transform.GetComponent<Rigidbody2D>().velocity = new Vector2(1f, 0f);
+            transform.GetComponent<Rigidbody2D>().velocity = new Vector2(info.point.x - transform.position.x, info.point.y - transform.position.y).normalized * -1.5f;
         }
 
         /// <summary>
@@ -99,11 +110,13 @@ namespace CGJ.PlayerController
             if (info.transform != null)
             {
                 targetPosistion = info.point;
+                targetSpeed = info.transform.GetComponent<Rigidbody2D>().velocity;
             }
             else
             {
                 Vector3 _temp = Input.mousePosition;
                 targetPosistion = Camera.main.ScreenToWorldPoint(_temp);
+                targetSpeed = Vector2.zero;
             }
         }
 
@@ -125,7 +138,7 @@ namespace CGJ.PlayerController
                         break;
                     case "Elephant":
                         {
-                            transform.GetComponent<Rigidbody2D>().velocity = new Vector2(info.point.x - transform.position.x, info.point.y - transform.position.y).normalized * 5;
+                            transform.GetComponent<Rigidbody2D>().velocity = new Vector2(info.point.x - transform.position.x, info.point.y - transform.position.y).normalized * 2.5f;
                         }
                         break;
                     case "Ostrich":
@@ -137,7 +150,7 @@ namespace CGJ.PlayerController
                     case "Rhinoceros":
                         {
                             transform.GetComponent<Rigidbody2D>().velocity = new Vector2(info.point.x - transform.position.x, info.point.y - transform.position.y).normalized * 1.5f;
-                            info.transform.GetComponent<Rigidbody2D>().velocity *= 1.2f;
+                            info.transform.GetComponent<Rigidbody2D>().velocity *= 2.5f;
                         }
                         break;
                     case "Turtle":
@@ -161,7 +174,7 @@ namespace CGJ.PlayerController
         /// </summary>
         public void OnPlayerInvisible()
         {
-            if (playerScreenPosistion.x > 0f && playerScreenPosistion.x < 1f && playerScreenPosistion.y > 0f && playerScreenPosistion.y < 1f)
+            if (transform.position.x > -9.5f && transform.position.x < 9.5f && transform.position.y > -5.5f && transform.position.y < 5.5f)
             {
                 return;
             }

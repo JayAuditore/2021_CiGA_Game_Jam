@@ -51,22 +51,41 @@ namespace CGJ.Animals
             GameObject _temp = Instantiate<GameObject>(_animal);
             switch (CalculateLoadPoint())
             {
-                case 0: _animal.transform.position = TopPoint.position; break;
-                case 1: _animal.transform.position = BottomPoint.position; break;
-                case 2: _animal.transform.position = LeftPoint.position; break;
-                case 3: _animal.transform.position = RightPoint.position; break;
+                case 0:
+                    {
+                        _temp.transform.position = TopPoint.position;
+                        _temp.GetComponent<Rigidbody2D>().velocity = new Vector2(1.2f * Random.Range(-1.1f, 1.1f), 1.2f * Random.Range(-1.1f, 0.1f));
+                    }
+                    break;
+                case 1:
+                    {
+                        _temp.transform.position = BottomPoint.position;
+                        _temp.GetComponent<Rigidbody2D>().velocity = new Vector2(1.2f * Random.Range(-1.1f, 1f), 1.2f * Random.Range(0.1f, 1.1f));
+                    }
+                    break;
+                case 2:
+                    {
+                        _temp.transform.position = LeftPoint.position;
+                        _temp.GetComponent<Rigidbody2D>().velocity = new Vector2(1.2f * Random.Range(0.1f, 1.1f), 1.2f * Random.Range(-1.1f, 1.1f));
+                    }
+                    break;
+                case 3:
+                    {
+                        _temp.transform.position = RightPoint.position;
+                        _temp.GetComponent<Rigidbody2D>().velocity = new Vector2(1.2f * Random.Range(-1.1f, 0.1f), 1.2f * Random.Range(-1.1f, 1.1f));
+                    }
+                    break;
                 default:
                     break;
             }
-            _temp.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(-8f, 8f), Random.Range(-0.4f, 0.4f));
 
             if (_temp.GetComponent<Rigidbody2D>().velocity.x >= 0)
             {
-                _temp.transform.localScale = new Vector3(1, 1, 1);
+                _temp.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
             }
             else
             {
-                _temp.transform.localScale = new Vector3(-1, 1, 1);
+                _temp.transform.localScale = new Vector3(-0.8f, 0.8f, 0.8f);
             }
 
             return _animal;
@@ -78,7 +97,7 @@ namespace CGJ.Animals
         /// <returns>0是大象，1是鸵鸟，2是蟹，3是犀牛，4是龟</returns>
         public float CalculateAnimalType()
         {
-            return Random.Range(0, 5) % 5;
+            return Random.Range(0, 100) % 5;
         }
 
         /// <summary>
@@ -87,7 +106,7 @@ namespace CGJ.Animals
         /// <returns>0是上方，1是下方，2是左方，3是右方</returns>
         public float CalculateLoadPoint()
         {
-            return Random.Range(0, 4) % 4;
+            return Random.Range(0, 100) % 4;
         }
 
         /// <summary>
